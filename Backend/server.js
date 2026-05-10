@@ -17,10 +17,18 @@ const app = express();
 
 // CORS configuration for local development and Vercel production
 app.use(cors({
-  origin: [
-    'https://um-inventory.vercel.app',
-    'https://um-inventory-gyt7crz4g-krish-patels-projects1.vercel.app'
-  ],
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+
+    if (
+      origin.includes('vercel.app') ||
+      origin === 'http://localhost:5173'
+    ) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true
 }));
 
