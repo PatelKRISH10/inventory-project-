@@ -18,8 +18,8 @@ const app = express();
 // CORS configuration for local development and Vercel production
 app.use(cors({
   origin: [
-    'http://localhost:5173',
-    'https://um-inventory.vercel.app'
+    'https://um-inventory.vercel.app',
+    'https://um-inventory-gyt7crz4g-krish-patels-projects1.vercel.app'
   ],
   credentials: true
 }));
