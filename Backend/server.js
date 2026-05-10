@@ -1,3 +1,5 @@
+// Created by Krish Patel
+
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
@@ -13,9 +15,18 @@ const stockTransactionRoutes = require('./routes/stockTransactionRoutes');
 
 const app = express();
 
-app.use(cors());
+// CORS configuration for local development and Vercel production
+app.use(cors({
+  origin: [
+    'http://localhost:5173',
+    'https://um-inventory.vercel.app'
+  ],
+  credentials: true
+}));
+
 app.use(express.json());
 
+// API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/items', itemRoutes);
 app.use('/api/dashboard', dashboardRoutes);
@@ -24,6 +35,11 @@ app.use('/api/users', userRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/units', unitRoutes);
 app.use('/api/stock', stockTransactionRoutes);
+
+// Optional test route
+app.get('/', (req, res) => {
+  res.send('UM Inventory Backend is Running Successfully!');
+});
 
 const PORT = process.env.PORT || 5000;
 
